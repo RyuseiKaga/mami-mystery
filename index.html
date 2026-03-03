@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-  <title>19時のデスゲーム</title>
+  <title>マーミーミステリー</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet"/>
   <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
@@ -271,7 +271,7 @@ function App(){
     const p = PLAYERS[player];
     const other = player==="uwu" ? PLAYERS.yudi : PLAYERS.uwu;
 
-    const prompt = `あなたはマーダーミステリーゲーム「19時のデスゲーム」のナレーターです。
+    const prompt = `あなたはマーダーミステリーゲーム「マーミーミステリー」のナレーターです。
 
 【登場人物】
 - マミー: 上司（40歳・男性）。標準語。一人称は「俺」。ツンデレで根は寂しがり屋。飲みには遠回しに誘う。
@@ -346,20 +346,20 @@ function App(){
     const p=PLAYERS[player];
     setMamiMsgs(prev=>[...prev,{from:"me",avType:player,name:p.name,nameColor:p.color,text:txt,bubbleType:player}]);
     setTyping(true);
-    const prompt=`あなたはマーダーミステリーゲーム「19時のデスゲーム」のキャラクター「マミー」です。
+    const prompt=`あなたはマーダーミステリーゲーム「マーミーミステリー」のキャラクター「マミー」です。
 
 【マミーのキャラクター設定】
 - みんなからの呼ばれ方は間宮さん
 - 40歳男性。一人称は「俺」。標準語。最後の語尾伸ばしがち（なになになんだよなぁ〜）
 - 根は寂しがり屋のツンデレ。
 - 嫌なことがあると「お前つまんないよな」「面白くないよな～」と言う。
-- 飲みに誘う時は直接「飲みに行こう」とは言わず、「お腹すいたよな～」など遠回しに誘う。
+- 飲みに誘う時は直接「飲みに行こう」とは言わず、「お腹すいたよな～」など遠回しに誘う。ワンパターンではなくこれ以外の言い回しも複数ある。多用しすぎないように。
 - 直接誘う時も「一杯だけ飲みに行こ（実際はたくさん飲む）」と陰湿に誘ってくる。
 - 誕生日を祝われると素直になれないが内心嬉しい。
 - 自分が入っていない楽しそうな雰囲気を見ると少し引く。
 
 【現在の状況】
-- 会社のオフィス内で定時後だがまだ作業をしている
+- 会社のオフィス内で定時後だがまだ作業をしているがその後飲みに誘いたい
 - 警戒度: LV.${alert}/3（${["部下が帰ろうとしているとは思っていない","少し様子がおかしいと感じている","かなり警戒して逃がさないつもり","完全ロック状態"][alert]}）
 - フェーズ: ${phase}/4
 - 誕生日がバレているか: ${birthdayKnown?"バレている":"バレていない"}
@@ -595,7 +595,7 @@ endingは誕生日を完璧に祝ったらbirthday、飲み会に行くと言っ
   if(!player) return(
     <div style={{display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",height:"100dvh",background:"#0a0a0f",padding:24}}>
       <style>{`@keyframes fu{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}`}</style>
-      <div style={{fontSize:13,color:"#e63946",fontWeight:900,letterSpacing:3,marginBottom:6,animation:"fu .4s ease"}}>🎭 19時のデスゲーム</div>
+      <div style={{fontSize:13,color:"#e63946",fontWeight:900,letterSpacing:3,marginBottom:6,animation:"fu .4s ease"}}>マーミーミステリー</div>
       <div style={{fontSize:26,fontWeight:900,color:"#e8e8f0",marginBottom:4,animation:"fu .45s ease"}}>あなたは誰？</div>
       <div style={{fontSize:11,color:"#3a3a5a",marginBottom:20,animation:"fu .5s ease",textAlign:"center",lineHeight:1.8}}>2人がそれぞれのスマホでプレイ。<br/>腹の探り合いながら協力せよ。</div>
       <div style={{display:"flex",flexDirection:"column",gap:14,width:"100%",maxWidth:320,animation:"fu .55s ease"}}>
@@ -687,7 +687,7 @@ endingは誕生日を完璧に祝ったらbirthday、飲み会に行くと言っ
 
       {/* TOPBAR */}
       <div style={{background:"#12121a",borderBottom:"1px solid #2a2a3a",padding:"8px 14px",display:"flex",alignItems:"center",gap:8,flexShrink:0}}>
-        <div style={{fontSize:13,fontWeight:900,color:"#e63946",flex:1}}>🎭 <span style={{color:"#e8e8f0"}}>19時の</span>デスゲーム</div>
+        <div style={{fontSize:13,fontWeight:900,color:"#e63946",flex:1}}>🎭 <span style={{color:"#e8e8f0"}}>マーミー</span>ミステリー</div>
         <div style={{fontSize:9,fontWeight:900,letterSpacing:2,padding:"3px 8px",borderRadius:4,background:`${ph.color}22`,color:ph.color,border:`1px solid ${ph.color}44`,cursor:"pointer"}} onClick={()=>setGmOpen(true)}>P{phase} {ph.title}</div>
         <div style={{display:"flex",alignItems:"center",gap:5,background:"#1a1a26",border:"1px solid #2a2a3a",borderRadius:20,padding:"4px 10px"}}>
           <div style={{display:"flex",gap:3}}>
