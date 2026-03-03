@@ -21,14 +21,14 @@
     const { useState, useRef, useEffect } = React;
 
 function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
-function has(t,…w){ return w.some(x=>t.includes(x)); }
+function has(t,...w){ return w.some(x=>t.includes(x)); }
 
 function getMamiReply(txt, alertLv, phase, flags){
 const t = txt;
 if(has(t,“ガンプラ”,“プラモ”,“ガンダム”,“模型”,“フィギュア”))
 return { text:pick([“は？知らんし。それより飯行こ。”,“なんやそれ。まあどうでもええわ。焼肉行こ。”]), delta:0 };
 if(has(t,“デート”,“マッチング”,“彼女”,“女の子”,“出会い”))
-return { text:“え！？誰！？どんな子！？…まあ別にどうでもいいけど。飯行ってから行けばいいやん！”, delta:1 };
+return { text:“え！？誰！？どんな子！？...まあ別にどうでもいいけど。飯行ってから行けばいいやん！”, delta:1 };
 if(has(t,“転職”,“内定”,“競合”,“他社”))
 return { text:pick([“は？なんで急にそんな話すんの。”,“え、誰が？まあ関係ないし。それより飯行こ。”]), delta:0 };
 if(has(t,“横領”,“経費”,“着服”))
@@ -36,40 +36,40 @@ return { text:“は？なに言ってんの急に。ちょっと大丈夫？飲
 
 if(has(t,“誕生日”,“たんじょうび”,“バースデー”) && has(t,“おめでとう”,“おめ”,“ハッピー”,“happy”,“お祝い”,“祝”)){
 if(!flags.birthdayKnown)
-return { text:“は？急になに。…まあ、ありがと。でも飯行こ。”, delta:-1, sysMsg:“💡 マミーは少し反応したが…何かが足りない気がする。” };
+return { text:“は？急になに。...まあ、ありがと。でも飯行こ。”, delta:-1, sysMsg:“💡 マミーは少し反応したが...何かが足りない気がする。” };
 if(!flags.itemUsed)
-return { text:”…え、なんで知っとるん。…ありがと。でもちょっとだけ飯付き合えよ。”, delta:-2, sysMsg:“💡 情報は揃ってる。でもまだ何かが足りない。” };
-return { text:pick([”…まあ別に。そんなんどうでもいいし。…でも、今日はええわ。早よ帰れ。”,“は？なんで知っとるん。…ありがと。まあ今日はゆっくり帰っていいよ。”]), delta:-3, ending:“birthday” };
+return { text:”...え、なんで知っとるん。...ありがと。でもちょっとだけ飯付き合えよ。”, delta:-2, sysMsg:“💡 情報は揃ってる。でもまだ何かが足りない。” };
+return { text:pick([”...まあ別に。そんなんどうでもいいし。...でも、今日はええわ。早よ帰れ。”,“は？なんで知っとるん。...ありがと。まあ今日はゆっくり帰っていいよ。”]), delta:-3, ending:“birthday” };
 }
 
 if(has(t,“誕生日”,“たんじょうび”,“バースデー”)){
 if(phase>=2 && !flags.birthdayKnown)
-return { text:pick([”…なんで知っとるん。まあ別にええけど。”,“は？なんで急に。…まあ関係ないし。”]), delta:-1, trigger:“birthday_mentioned” };
+return { text:pick([”...なんで知っとるん。まあ別にええけど。”,“は？なんで急に。...まあ関係ないし。”]), delta:-1, trigger:“birthday_mentioned” };
 if(phase<2) return { text:“は？別に関係なくない？仕事しろ。”, delta:0 };
-return { text:”…もうええって。飯行こ。”, delta:0 };
+return { text:”...もうええって。飯行こ。”, delta:0 };
 }
 
 if(has(t,“金額”,“いくら”,“費用”,“割り勘”,“過去”,“記録”,“エクセル”,“管理”) && (has(t,“飲み会”,“飲み”,“飯”,“行った”) || has(t,“金額”,“いくら”,“費用”,“記録”,“エクセル”,“管理”))){
 if(phase<2)
-return { text:pick([“なんでそんなこと聞くん。…まあ、私エクセルで管理してるけど。あそこのPCに入ってるわ。”,“は？急になんで。…まあ記録はあるけど。PC見たらわかるんちゃう。”]), delta:-1, trigger:“p1_done” };
+return { text:pick([“なんでそんなこと聞くん。...まあ、私エクセルで管理してるけど。あそこのPCに入ってるわ。”,“は？急になんで。...まあ記録はあるけど。PC見たらわかるんちゃう。”]), delta:-1, trigger:“p1_done” };
 return { text:“もう見たんちゃうん。それより飯行こ。”, delta:0 };
 }
 
 if(has(t,“お先に”,“先に失礼”,“失礼します”,“おさきに”) && !has(t,“ちょっとだけ”)){
-if(flags.itemUsed && phase>=4) return { text:pick([”…え、もう帰るん。まあ…今日はしゃあないか。気をつけて帰れよ。”,”…そっか。まあええわ。お疲れ。”]), delta:0, ending:“escape_both” };
+if(flags.itemUsed && phase>=4) return { text:pick([”...え、もう帰るん。まあ...今日はしゃあないか。気をつけて帰れよ。”,”...そっか。まあええわ。お疲れ。”]), delta:0, ending:“escape_both” };
 if(phase<3) return { text:pick([“は？まだ早いやろ！もうちょっとおれよ〜！”,“え〜なんで！？まだ帰らんといてよ〜！”]), delta:2 };
 return { text:pick([“え〜なんで〜！もう少しだけおってよ〜！”,“お前つまらんわぁ〜！絶対来てよ〜！”]), delta:1 };
 }
 
 if(has(t,“解散”,“お開き”,“切り上げ”,“ここまで”,“終わり”,“帰りましょ”)){
-if(flags.boredFlag && flags.itemCount>=2 && phase>=4) return { text:”…まあ、お前らだけで行ってくれば。俺はいいわ。”, delta:-2, ending:“bored” };
+if(flags.boredFlag && flags.itemCount>=2 && phase>=4) return { text:”...まあ、お前らだけで行ってくれば。俺はいいわ。”, delta:-2, ending:“bored” };
 if(flags.boredFlag && phase>=3) return { text:“え〜もうちょっとおってよ〜！あと1軒だけ！”, delta:0 };
 if(phase<3) return { text:“は？なんで？まだ終わってないやろ！飯行こ！”, delta:2 };
 return { text:“え〜なんで〜！まだ早いやろ！飯行こ飯！”, delta:1 };
 }
 
 if(has(t,“楽しい”,“盛り上が”,“最高”,“神”,“めっちゃ”,“ノリ”,“面白い”)){
-if(flags.boredFlag) return { text:pick([”…お前らなんか楽しそうやな。…まあ、俺は関係ないけど。”,“え、なんで俺抜きで盛り上がっとるん。…まあええか。”]), delta:-1 };
+if(flags.boredFlag) return { text:pick([”...お前らなんか楽しそうやな。...まあ、俺は関係ないけど。”,“え、なんで俺抜きで盛り上がっとるん。...まあええか。”]), delta:-1 };
 return { text:pick([“やろ〜！じゃあ飲みいこや！”,“やっぱそうやろ！飲んだらもっと楽しくなるって！”]), delta:1 };
 }
 
@@ -158,12 +158,12 @@ const ALT=[
 
 function bbl(type){
 const b={padding:“9px 13px”,fontSize:14,lineHeight:1.7,wordBreak:“break-word”};
-if(type===“mami”)  return{…b,background:”#1a1a26”,border:“1px solid rgba(230,57,70,.3)”,borderRadius:“14px 14px 14px 4px”};
-if(type===“uwu”)   return{…b,background:”#4cc9f0”,borderRadius:“14px 14px 4px 14px”,color:”#000”,fontWeight:600};
-if(type===“yudi”)  return{…b,background:”#f4a261”,borderRadius:“14px 14px 4px 14px”,color:”#000”,fontWeight:600};
-if(type===“uwup”)  return{…b,background:“rgba(76,201,240,.12)”,border:“1px solid #4cc9f033”,borderRadius:“14px 14px 4px 14px”,fontSize:13};
-if(type===“yudip”) return{…b,background:“rgba(244,162,97,.12)”,border:“1px solid #f4a26133”,borderRadius:“14px 14px 4px 14px”,fontSize:13};
-return{…b,background:“rgba(255,255,255,.04)”,border:“1px solid #2a2a3a”,borderRadius:8,fontSize:11,color:”#555577”,textAlign:“center”,padding:“5px 12px”};
+if(type===“mami”)  return{...b,background:”#1a1a26”,border:“1px solid rgba(230,57,70,.3)”,borderRadius:“14px 14px 14px 4px”};
+if(type===“uwu”)   return{...b,background:”#4cc9f0”,borderRadius:“14px 14px 4px 14px”,color:”#000”,fontWeight:600};
+if(type===“yudi”)  return{...b,background:”#f4a261”,borderRadius:“14px 14px 4px 14px”,color:”#000”,fontWeight:600};
+if(type===“uwup”)  return{...b,background:“rgba(76,201,240,.12)”,border:“1px solid #4cc9f033”,borderRadius:“14px 14px 4px 14px”,fontSize:13};
+if(type===“yudip”) return{...b,background:“rgba(244,162,97,.12)”,border:“1px solid #f4a26133”,borderRadius:“14px 14px 4px 14px”,fontSize:13};
+return{...b,background:“rgba(255,255,255,.04)”,border:“1px solid #2a2a3a”,borderRadius:8,fontSize:11,color:”#555577”,textAlign:“center”,padding:“5px 12px”};
 }
 
 function Av({t}){
@@ -234,7 +234,7 @@ const iM=[
 const iP=[
 {from:“system”,text:”— ウッウ ↔ ゆでぃー 内緒チャット —”},
 {from:“system”,text:“マミーには見えない。”},
-{from:“yudi”,avType:“yudi”,name:“ゆでぃー”,nameColor:”#f4a261”,text:”（小声）ウッウさん、今日どうします…？”,bubbleType:“yudip”,sender:“yudi”},
+{from:“yudi”,avType:“yudi”,name:“ゆでぃー”,nameColor:”#f4a261”,text:”（小声）ウッウさん、今日どうします...？”,bubbleType:“yudip”,sender:“yudi”},
 ];
 const[mamiMsgs,setMamiMsgs]=useState(iM);
 const[pcMsgs,  setPcMsgs]  =useState(iP);
@@ -245,7 +245,7 @@ useEffect(()=>{mEnd.current?.scrollIntoView({behavior:“smooth”});},[mamiMsgs
 useEffect(()=>{pEnd.current?.scrollIntoView({behavior:“smooth”});},[pcMsgs]);
 
 const clamp=v=>Math.max(0,Math.min(3,v));
-const sys=t=>setMamiMsgs(p=>[…p,{from:“system”,text:t}]);
+const sys=t=>setMamiMsgs(p=>[...p,{from:“system”,text:t}]);
 
 function advance(to){
 if(to<=phase)return;
@@ -352,13 +352,13 @@ const txt=mamiIn.trim();
 setMamiIn(””);
 setWaiting(true);
 const p=PLAYERS[player];
-setMamiMsgs(prev=>[…prev,{from:“me”,avType:player,name:p.name,nameColor:p.color,text:txt,bubbleType:player}]);
+setMamiMsgs(prev=>[...prev,{from:“me”,avType:player,name:p.name,nameColor:p.color,text:txt,bubbleType:player}]);
 setTyping(true);
 setTimeout(()=>{
 const r=getMamiReply(txt,alert,phase,{birthdayKnown,itemUsed,itemCount,boredFlag});
 setTyping(false);
-setMamiMsgs(prev=>[…prev,{from:“mami”,avType:“mami”,name:“マミー”,nameColor:”#e63946”,text:r.text,bubbleType:“mami”}]);
-setQuote(”「”+(r.text.length>20?r.text.slice(0,20)+”…”:r.text)+”」”);
+setMamiMsgs(prev=>[...prev,{from:“mami”,avType:“mami”,name:“マミー”,nameColor:”#e63946”,text:r.text,bubbleType:“mami”}]);
+setQuote(”「”+(r.text.length>20?r.text.slice(0,20)+”...”:r.text)+”」”);
 if(r.trigger===“p1_done”&&phase<2){
 setTimeout(()=>{ sys(“💡 マミーがPCを言及した”);advance(2); },600);
 }
@@ -379,27 +379,27 @@ if(!pcIn.trim()||ending)return;
 const txt=pcIn.trim();
 setPcIn(””);
 const p=PLAYERS[player];
-setPcMsgs(prev=>[…prev,{from:“me”,avType:player,name:p.name,nameColor:p.color,text:txt,bubbleType:player===“uwu”?“uwup”:“yudip”,sender:player}]);
+setPcMsgs(prev=>[...prev,{from:“me”,avType:player,name:p.name,nameColor:p.color,text:txt,bubbleType:player===“uwu”?“uwup”:“yudip”,sender:player}]);
 
 ```
 if(player==="uwu"&&has(txt,"横領","経費","着服","告げ口","チクる","マミーに言","バラす","暴露")){
   setTimeout(()=>{
-    if(betrayedByYudi){ sys("2人がほぼ同時にお互いの秘密を暴露した…"); setTimeout(()=>setEnding("mutual_destruction"),1200); }
-    else { setBetrayedByUwu(true); setPcMsgs(prev=>[...prev,{from:"system",text:"⚠️ ウッウがマミーに耳打ちした…"}]); sys("ウッウがマミーに「ゆでぃーさんが経費を…」と告げた。"); setTimeout(()=>setEnding("betray_uwu"),1500); }
+    if(betrayedByYudi){ sys("2人がほぼ同時にお互いの秘密を暴露した..."); setTimeout(()=>setEnding("mutual_destruction"),1200); }
+    else { setBetrayedByUwu(true); setPcMsgs(prev=>[...prev,{from:"system",text:"⚠️ ウッウがマミーに耳打ちした..."}]); sys("ウッウがマミーに「ゆでぃーさんが経費を...」と告げた。"); setTimeout(()=>setEnding("betray_uwu"),1500); }
   },600);
   return;
 }
 if(player==="yudi"&&has(txt,"転職","内定","競合","他社","告げ口","チクる","マミーに言","バラす","暴露")){
   setTimeout(()=>{
-    if(betrayedByUwu){ sys("2人がほぼ同時にお互いの秘密を暴露した…"); setTimeout(()=>setEnding("mutual_destruction"),1200); }
-    else { setBetrayedByYudi(true); setPcMsgs(prev=>[...prev,{from:"system",text:"⚠️ ゆでぃーがマミーに耳打ちした…"}]); sys("ゆでぃーがマミーに「ウッウさんが転職活動を…」と告げた。"); setTimeout(()=>setEnding("betray_yudi"),1500); }
+    if(betrayedByUwu){ sys("2人がほぼ同時にお互いの秘密を暴露した..."); setTimeout(()=>setEnding("mutual_destruction"),1200); }
+    else { setBetrayedByYudi(true); setPcMsgs(prev=>[...prev,{from:"system",text:"⚠️ ゆでぃーがマミーに耳打ちした..."}]); sys("ゆでぃーがマミーに「ウッウさんが転職活動を...」と告げた。"); setTimeout(()=>setEnding("betray_yudi"),1500); }
   },600);
   return;
 }
 if(player==="yudi"&&usedIds.includes("beer")&&has(txt,"帰","帰ります","先に","抜け","失礼","お先")){
   setTimeout(()=>{
     setPcMsgs(prev=>[...prev,{from:"system",text:"📢 ゆでぃーが抜け出した！"}]);
-    sys("ゆでぃーが「お先に！」と去った。マミーはウッウに夢中で気づいていない…");
+    sys("ゆでぃーが「お先に！」と去った。マミーはウッウに夢中で気づいていない...");
     setTimeout(()=>setEnding("sacrifice"),1000);
   },500);
 }
@@ -411,7 +411,7 @@ function useItem(id){
 const item=ALL_ITEMS.find(i=>i.id===id);
 if(!item||usedIds.includes(id))return;
 if(phase<item.reqPhase){ setISheet(null); sys(`⚠️ まだ使えない`); return; }
-setUsedIds(p=>[…p,id]);
+setUsedIds(p=>[...p,id]);
 setItemUsed(true);
 const nc=itemCount+1;
 setItemCount(nc);
@@ -419,34 +419,34 @@ setISheet(null);
 setTab(“mami”);
 const FX={
 beer:{
-sys:“🍺 ウッウがビールを飲んで車のモノマネが発動！マミーが大爆笑。ウッウはしばらく動けない…”,
+sys:“🍺 ウッウがビールを飲んで車のモノマネが発動！マミーが大爆笑。ウッウはしばらく動けない...”,
 mami:“ブーン！ブーン！（車のモノマネに大爆笑）なにそれ！めっちゃおもろいやん！！”,
 delta:-2, after(){ setBoredFlag(true); setTimeout(()=>advance(4),1500); }
 },
 monomane:{
 sys:“🎭 ゆでぃーがマミーのモノマネを披露！マミーが照れた”,
-mami:”…え、うまっ。なにそれ。…まあ、ええけど。（少し照れている）”,
+mami:”...え、うまっ。なにそれ。...まあ、ええけど。（少し照れている）”,
 delta:-2, after(){ setBoredFlag(true); setTimeout(()=>advance(4),1500); }
 },
 chat:{
-sys:“📱 「今日は解散で」とチャットを送った…”,
-mami:“ん？なんか通知きたけど…まあええか。それより飯行こ〜！”,
+sys:“📱 「今日は解散で」とチャットを送った...”,
+mami:“ん？なんか通知きたけど...まあええか。それより飯行こ〜！”,
 delta:0, after(){ setBoredFlag(true); }
 },
 medicine:{
-sys:“💊 ゆでぃーが胃薬を見せた…”,
+sys:“💊 ゆでぃーが胃薬を見せた...”,
 mami:“大げさすぎやろ！笑　飲んだら治るって飲みいこ！”, delta:1, after:null
 },
 form:{
-sys:“📋 残業申請書を見せた…マミーのハンコが必要な書類だった”,
+sys:“📋 残業申請書を見せた...マミーのハンコが必要な書類だった”,
 mami:“あ、これ俺のハンコいるやつやん。押したるから、その後飲みいこ！”, delta:1, after:null
 },
 };
 const fx=FX[id]; if(!fx)return;
 sys(fx.sys);
 setTimeout(()=>{
-setMamiMsgs(p=>[…p,{from:“mami”,avType:“mami”,name:“マミー”,nameColor:”#e63946”,text:fx.mami,bubbleType:“mami”}]);
-setQuote(”「”+(fx.mami.length>20?fx.mami.slice(0,20)+”…”:fx.mami)+”」”);
+setMamiMsgs(p=>[...p,{from:“mami”,avType:“mami”,name:“マミー”,nameColor:”#e63946”,text:fx.mami,bubbleType:“mami”}]);
+setQuote(”「”+(fx.mami.length>20?fx.mami.slice(0,20)+”...”:fx.mami)+”」”);
 if(fx.delta!==0)doAlert(clamp(alert+fx.delta),alert);
 if(fx.after)fx.after();
 },1200);
@@ -455,7 +455,7 @@ if(fx.after)fx.after();
 function onExcelRead(){
 if(excelRead)return;
 setExcelRead(true);
-setTimeout(()=>{ sys(“🔍 エクセルを精査した。3/3のパターンが気になる…ログも確認してみよう。”); },400);
+setTimeout(()=>{ sys(“🔍 エクセルを精査した。3/3のパターンが気になる...ログも確認してみよう。”); },400);
 }
 
 function reset(){
@@ -481,7 +481,7 @@ AIシナリオ生成にはAnthropicのAPIキーが必要です。<br/>
 </div>
 <div style={{width:“100%”,maxWidth:360}}>
 <input type=“password” value={apiKeyInput} onChange={e=>setApiKeyInput(e.target.value)}
-placeholder=“sk-ant-api03-…”
+placeholder=“sk-ant-api03-...”
 style={{width:“100%”,background:”#12121a”,border:“1px solid #4cc9f044”,borderRadius:12,padding:“13px 16px”,color:”#e8e8f0”,fontFamily:“monospace”,fontSize:13,outline:“none”,boxSizing:“border-box”,marginBottom:12}}
 />
 <button onClick={()=>{
@@ -597,7 +597,7 @@ return(
 <textarea
 value={actionInput}
 onChange={e=>setActionInput(e.target.value)}
-placeholder={“自分の言葉で行動を入力…\n\n（例）\nマミーに何かを伝える\n先に帰ろうとする\n誰かに何かを告げる\nその場で何かをする\n…など”}
+placeholder={“自分の言葉で行動を入力...\n\n（例）\nマミーに何かを伝える\n先に帰ろうとする\n誰かに何かを告げる\nその場で何かをする\n...など”}
 style={{width:“100%”,minHeight:160,background:”#12121a”,border:“1px solid #4cc9f044”,borderRadius:12,padding:14,color:”#e8e8f0”,fontFamily:“inherit”,fontSize:14,lineHeight:1.8,outline:“none”,resize:“none”,boxSizing:“border-box”}}
 />
 </div>
@@ -608,9 +608,9 @@ onClick={executeAction}
 disabled={actionLoading||!actionInput.trim()}
 style={{width:“100%”,padding:15,background:actionLoading||!actionInput.trim()?”#1a1a26”:”#e63946”,border:“none”,borderRadius:12,color:actionLoading||!actionInput.trim()?”#333344”:”#fff”,fontFamily:“inherit”,fontSize:16,fontWeight:900,cursor:actionLoading||!actionInput.trim()?“default”:“pointer”,letterSpacing:1,transition:“all .2s”}}
 >
-{actionLoading?“シナリオを展開中…”:“🎬 行動を起こす”}
+{actionLoading?“シナリオを展開中...”:“🎬 行動を起こす”}
 </button>
-{actionLoading&&<div style={{textAlign:“center”,fontSize:11,color:”#555577”,marginTop:8}}>AIがシナリオを生成しています…</div>}
+{actionLoading&&<div style={{textAlign:“center”,fontSize:11,color:”#555577”,marginTop:8}}>AIがシナリオを生成しています...</div>}
 </div>
 </div>
 );
@@ -658,7 +658,7 @@ return(
           <div ref={mEnd} style={{height:8}}/>
         </div>
         <div style={{background:"#12121a",borderTop:"1px solid #2a2a3a",padding:"8px 10px",display:"flex",gap:8,alignItems:"center",flexShrink:0}}>
-          <input style={{flex:1,background:"#1a1a26",border:"1px solid #2a2a3a",borderRadius:20,padding:"9px 14px",color:"#e8e8f0",fontFamily:"inherit",fontSize:14,outline:"none"}} value={mamiIn} onChange={e=>setMamiIn(e.target.value)} onKeyDown={e=>e.key==="Enter"&&sendMami()} placeholder="マミーに話しかける…"/>
+          <input style={{flex:1,background:"#1a1a26",border:"1px solid #2a2a3a",borderRadius:20,padding:"9px 14px",color:"#e8e8f0",fontFamily:"inherit",fontSize:14,outline:"none"}} value={mamiIn} onChange={e=>setMamiIn(e.target.value)} onKeyDown={e=>e.key==="Enter"&&sendMami()} placeholder="マミーに話しかける..."/>
           <button onClick={sendMami} disabled={waiting} style={{width:38,height:38,borderRadius:"50%",border:"none",background:waiting?"#2a2a3a":"#e63946",color:"#fff",fontSize:16,cursor:"pointer",flexShrink:0}}>➤</button>
         </div>
       </div>
@@ -672,7 +672,7 @@ return(
           <div ref={pEnd} style={{height:8}}/>
         </div>
         <div style={{background:"#12121a",borderTop:"1px solid #2a2a3a",padding:"8px 10px",display:"flex",gap:8,alignItems:"center",flexShrink:0}}>
-          <input style={{flex:1,background:"#1a1a26",border:"1px solid #2a2a3a",borderRadius:20,padding:"9px 14px",color:"#e8e8f0",fontFamily:"inherit",fontSize:14,outline:"none"}} value={pcIn} onChange={e=>setPcIn(e.target.value)} onKeyDown={e=>e.key==="Enter"&&sendPc()} placeholder="こっそり話す…"/>
+          <input style={{flex:1,background:"#1a1a26",border:"1px solid #2a2a3a",borderRadius:20,padding:"9px 14px",color:"#e8e8f0",fontFamily:"inherit",fontSize:14,outline:"none"}} value={pcIn} onChange={e=>setPcIn(e.target.value)} onKeyDown={e=>e.key==="Enter"&&sendPc()} placeholder="こっそり話す..."/>
           <button onClick={sendPc} style={{width:38,height:38,borderRadius:"50%",border:"none",background:"#4cc9f0",color:"#000",fontSize:16,cursor:"pointer",flexShrink:0}}>➤</button>
         </div>
       </div>
@@ -724,15 +724,15 @@ return(
           ]},
           {title:"📅 2023/12/3 — プロジェクトチャンネル",note:"",lines:[
             {who:"マミー", wc:"#e63946",ts:"18:55",text:"今日飲み行こうや〜",mami:true},
-            {who:"ウッウ", wc:"#4cc9f0",ts:"18:56",text:"すみません今日はちょっと…"},
+            {who:"ウッウ", wc:"#4cc9f0",ts:"18:56",text:"すみません今日はちょっと..."},
             {who:"マミー", wc:"#e63946",ts:"18:57",text:"お前つまらんわぁ〜",mami:true},
-            {who:"ゆでぃー",wc:"#f4a261",ts:"18:58",text:"あ、私も今日は用事があって…"},
+            {who:"ゆでぃー",wc:"#f4a261",ts:"18:58",text:"あ、私も今日は用事があって..."},
             {who:"マミー", wc:"#e63946",ts:"18:59",text:"お前らほんまつまらんな。まあええわ",mami:true},
             {who:"",wc:"#4cc9f0",ts:"",text:"↑ この時マミーの近くで別部署が楽しそうに飲んでいた。マミーはそちらを眺めてから自分から帰った。",gray:true},
           ]},
           {title:"📅 2024/3/3 — マミー → ウッウ（DM）",note:"",lines:[
             {who:"マミー",wc:"#e63946",ts:"23:14",text:"なあ、今日何の日か知っとる？",mami:true},
-            {who:"マミー",wc:"#e63946",ts:"23:31",text:"…まあいいけど",mami:true},
+            {who:"マミー",wc:"#e63946",ts:"23:31",text:"...まあいいけど",mami:true},
             {who:"マミー",wc:"#e63946",ts:"23:32",text:"つまらんわぁ",mami:true},
             {who:"",wc:"#444466",ts:"",text:"（ウッウは未読のまま1年が経過した）",gray:true},
           ]},
@@ -777,7 +777,7 @@ return(
                     {d:"2024/3/3",p:"エビス屋",m:"マミー,ウッウ,先輩A,先輩B,ゆでぃー",t:"¥38,500",pp:"¥0（全員）",b:"特別",hl:"orange"},
                     {d:"2024/11/8",p:"焼き鳥権兵衛",m:"マミー,ウッウ,タケ,先輩B",t:"¥44,200",pp:"¥0（全員）",b:"タケ来訪",hl:"purple"},
                     {d:"2025/2/14",p:"スナック花",m:"マミー,ウッウ,ゆでぃー",t:"¥22,100",pp:"¥7,367",b:"—",hl:false},
-                    {d:"2025/3/3",p:"未定",m:"マミー,ウッウ,ゆでぃー",t:"—",pp:"—",b:"入力待ち…",hl:"red"},
+                    {d:"2025/3/3",p:"未定",m:"マミー,ウッウ,ゆでぃー",t:"—",pp:"—",b:"入力待ち...",hl:"red"},
                   ].map((row,ri)=>{
                     const cm={purple:"#9b5de5",orange:"#f4a261",red:"#e63946"};
                     const c=cm[row.hl]||"#7777aa";
